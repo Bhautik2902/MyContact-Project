@@ -1,0 +1,164 @@
+@import url(./cssutilities.css);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+div {
+    display: block;
+}
+
+.wrapper {
+    background-color: var(--light);
+    min-height: 100vh;
+}
+
+.wrapper .container {
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.header {
+    padding: 35px 0 35px 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .flex-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    margin: auto;
+}
+
+.auth-container {
+    background: white;
+    padding: 1rem 30px 10px 30px;
+    border-radius: 10px;
+}
+
+.auth-container .auth-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: .5rem;
+}
+
+small {
+    visibility: visible;
+    text-align: start;
+    margin-bottom: .8rem;
+    font-size: .75rem;
+    font-weight: 400;
+}
+
+.form-div {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.error input {
+    border: 1px solid red;   
+}
+
+.error {
+    visibility: visible;
+    padding-left: 2px;
+    color: red;
+    font-weight: 500;
+} 
+
+.radio-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio-section input[type='radio'] { 
+    transform: scale(1.4);    
+}
+
+.radio-section .pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.radio-section .pair span{
+    margin-right: .5rem;
+    color: var(--dark);
+}
+
+.button-section {
+    text-align: center;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 5rem;
+}
+
+@media (max-width: 465px) {
+    .form-div .name-section .field-margin{
+        width: 100%;
+        margin-bottom: .7rem;
+    }
+
+    .form-div .name-section input{
+        width: 100%;
+    }
+
+    .header .flex-wrap {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 335px) {
+    .radio-section .pair span {
+        font-size: .8rem;
+        margin-right: .2rem;
+    }
+
+    .radio-section input[type='radio'] { 
+        transform: scale(1.2);    
+    }
+
+    .auth-header span {
+        font-size: 1.5rem;
+    }
+
+    .content .auth-container {
+        width: 100%;
+    }
+}

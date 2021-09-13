@@ -1,0 +1,240 @@
+@import url(cssutilities.css);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+div {
+    display: block;
+}
+
+.wrapper {
+    background-color: var(--light);
+    min-height: 100vh;
+}
+
+.wrapper .container {
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.header {
+    padding: 35px 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .flex-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.header .flex-wrap .buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: space-around;
+}
+
+.header .flex-wrap .buttons .button {
+    margin-left: 15px;
+}
+
+.container .main .headings {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.container .main .title {
+    width: 95%;
+    font-size: 3.2rem;
+    font-weight: 500;
+    color: var(--dark);   
+}
+
+.container .main .title span {
+    font-weight: 800;
+}
+
+.container .main .description {
+    font-size: 1rem;
+    color: var(--dark);
+    align-items: center;
+}
+
+.container .main .description span {
+    font-weight: 600;
+}
+
+.container .main .description {
+    width: 80%;
+    margin-bottom: 75px;
+    color: var(--dark);
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.features {
+    height: fit-content;
+    border-radius: 10px;
+    padding: 3rem 3rem 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.features .content-wrap {
+    width: 100%;
+}
+.features .content-wrap .items {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.features .content-wrap .items img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    border: .15rem solid var(--dark);
+    padding: 8px;
+    border-radius: 50px;
+}
+
+.features .content-wrap .items span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+footer {
+    display: block;
+    text-align: center;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 15px;
+}
+
+footer .footer-wrap img {
+    width: 200px;
+}
+footer .footer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer .footer-wrap span {
+    font-size: .9rem;
+}
+
+@media (max-width:766px) {
+    .container .main .title {
+        font-size: 3.2rem;
+        font-weight: 500;
+        color: var(--dark);
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .container .main .description {
+        margin-bottom: 75px;
+        color: var(--dark);
+        font-size: 1.1rem;
+    }
+
+    .features {
+        width: 70%;
+        margin-bottom: 1rem;
+    }
+
+    .features .content-wrap .items img {
+        width: 3rem;
+        height:3rem;
+    }
+
+    .features .content-wrap .items span {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 662px) {
+
+    .container .main .title {
+        font-size: 2.7rem;
+    }
+    .header .flex-wrap {
+        flex-direction: column;
+    }
+
+    .features {
+        width: 70%;
+        margin-bottom: 1rem;
+        padding: 1rem 1rem 1rem 2rem;
+    }
+
+}
+
+@media (max-width: 593px) {
+    .features {
+        width: 70%;
+        padding: 1rem 1rem 1rem 2rem;
+    }
+
+    .features .content-wrap .items img {
+        width: 2.5rem;
+        height:2.5rem;
+    }
+
+    .features .content-wrap .items span {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 345px) {
+    .container .main .title {
+        font-size: 2.2rem;
+    }
+    .container .main .description {
+        font-size: 1rem;
+    }
+
+    .features {
+        width: 100%;
+        padding: 1rem 1rem 1rem 2rem;
+    }
+
+    .features .content-wrap .items img {
+        width: 2.3rem;
+        height:2.3rem;
+    }
+
+    .features .content-wrap .items span {
+        font-size: .85rem;
+    }
+}

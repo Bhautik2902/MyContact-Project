@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "ViewContact";
+}
+
+<head>
+    <link href="~/css/style_contectviewpage.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <div class="flex-wrap">
+                    <div class="logo">
+                        <a href="@Url.Action("Homepage","Home")"><img src="~/images/logo.PNG" alt="Logo image"></a>
+</div>
+                    <div class="button">
+                        <a href="@Url.Action("Homepage","Home")"><button class="button-primary">Log out</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="title-space">
+                    <img src="~/images/person.png" alt="Person logo">
+                    <div class="name">
+                        <span id="fname">Bhautik</span>
+                        <span id="lname">Savaliya</span>
+                    </div>
+                </div>
+
+                <div class="details">
+                    <div class="content-wrap">
+                        <span class="sectionTitle">
+                            Contact Details
+                        </span>
+
+                        <div class="items">
+                            <img src="~/images/email.png" title="Contact's Email Address" alt="Email logo">
+                            <span id="fname" title="Contact's Email Address" contenteditable="true">bhautiksavaliya2000@gmail.com</span>
+                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
+                            <p class="emailcopy"></p>
+                        </div>
+
+                        <div class="items" title="Contact's Gender">
+                            <img src="~/images/gender.png" alt="Gender logo">
+                            <span id="fname" contenteditable="true">Male</span>
+                        </div>
+
+                        <div class="items">
+                            <img src="~/images/phone.png" title="Contact's Phone Number" alt="Phone logo">
+                            <span id="fname" title="Contact's Phone Number" contenteditable="true">+914559987867</span>
+                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
+                            <p class="phonecopy"></p>
+                        </div>
+
+                        <div class="items">
+                            <img src="~/images/fax.png" title="Contact's fax" alt="Fax-machine logo">
+                            <span id="fname" title="Contact's fax" contenteditable="true">+1-212-9876543</span>
+                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
+                            <p class="faxcopy"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button bottom-btn">
+                    <a href="./addcontact.html"><button class="button-primary">Save</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

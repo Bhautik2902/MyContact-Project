@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+<link href="~/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="overlay-section">
+        <div class="content">
+            <div class="auth-container">
+                <div class="closeIcon">
+                    <a href='@Url.Action("Index", "Home")'><img src="~/images/close.png" alt="Close button image"></a>
+                </div>
+                <div class="auth-header">
+                    <span>Login</span>
+                </div>
+                <div class="auth-form">
+                    <form action="" class="login" id="loginform" onsubmit="return validateForm()">
+                        <div class="credentials">
+                            <input class="textfields field-login" type="text" placeholder="Email" id="email">
+                            <small id="email_error"></small>
+
+                            <input class="textfields" type="password" placeholder="Password" id="pass">
+                            <small id="pass_error"></small>
+                        </div>
+                        <div class="button-section">
+                            <button class="button-secondary submit-login">Log in</button>
+                        </div>
+                        <div class="general">
+                            <small></small>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="link">
+                    <p>Don't have an account? <a href='@Url.Action("Signup","Signup")'>Log in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/login.js" type="text/javascript"></script>
+
+</body>
+

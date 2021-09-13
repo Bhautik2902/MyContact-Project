@@ -1,0 +1,122 @@
+@import url(./cssutilities.css);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+div {
+    display: block;
+}
+
+.wrapper {
+    background-color: var(--light);
+    min-height: 100vh;
+}
+
+.wrapper .container {
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.header {
+    padding: 35px 0 10px 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .flex-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    width: 80%;
+    height: fit-content;
+    position: relative;
+    margin: auto;
+}
+
+.content .title {
+    font-size: 1.5rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+}
+
+.table-container {
+    width: fit-content;
+    /* max-width: 100rem;   */
+    overflow-y: auto;
+    max-height: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content .table-container .content-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 400px;   
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    background-color: var(--dark);
+    color: white;    
+}
+
+.content-table th, .content-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid var(--border);
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: var(--lightgrey);
+}
+
+.content .table-container .content-table .btn {
+    padding: .1rem .5rem;
+    border-radius: 15px;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--dark);
+}
+
+.content .button {
+    margin: 2rem 0;
+}
+
+.content .button button {
+    margin-right: 1rem;
+}

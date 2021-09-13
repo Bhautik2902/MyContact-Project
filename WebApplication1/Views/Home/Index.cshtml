@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "My Contacts";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/style_landingpage.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <div class="flex-wrap">
+                    <div class="logo">
+                        <img src="~/images/logo.PNG" alt="Logo image"/>
+                    </div>
+
+                    <div class="buttons">
+                        <div class="button">
+                            <a href="@Url.Action("Login", "Login")"><button class="button-primary">Login</button></a>  
+                        </div>
+                        <div class="button">
+                            <a href="@Url.Action("Signup", "Signup")"><button class="button-primary">SignUp</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="headings">
+                    <h1 class="title">Welcome to <span>MyContacts!</span></h1>
+                    <p class="description"><span>Create</span>, <span>Keep</span> and <span>Retrieve</span> your connection's Information on the go. </p>
+                </div>
+
+                <div class="features">
+                    <div class="content-wrap">
+                        <div class="items">
+                            <img src="~/images/double_tick.png" alt="Double-tick image to show feature."/>
+                            <span>Simple User Interface.</span>
+                        </div>
+                        <div class="items">
+                            <img src="~/images/double_tick.png" alt="Double-tick image to show feature." />
+                            <span>Easy to use.</span>
+                        </div>
+                        <div class="items">
+                            <img src="~/images/double_tick.png" alt="Double-tick image to show feature." />
+                            <span>Accessable anywhere.</span>
+                        </div>
+                        <div class="items">
+                            <img src="~/images/double_tick.png" alt="Double-tick image to show feature." />
+                            <span>Useful on the go.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer>
+        <div class="footer-wrap">
+            <img src="~/images/logo.PNG" alt="Logo image" />
+            <span>&copy; 2021 all right reserved</span>
+        </div>
+    </footer>
+</body>
+</html>

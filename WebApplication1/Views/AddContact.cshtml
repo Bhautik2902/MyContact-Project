@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Add Contact";
+}
+
+<head>
+    <link href="~/css/style_addcontactpage.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="header">
+                <div class="flex-wrap">
+                    <div class="logo">
+                        <a href="@Url.Action("Homepage","Home")"><img src="~/images/logo.PNG"></a>
+                        
+                    </div>
+                    <div class="button">
+                        <a href="@Url.Action("Index","Home")"><button class="button-primary">Log out</button></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="content">
+                    <div class="auth-container">
+                        <div class="auth-header">
+                            <span>Add Details</span>
+                        </div>
+                        <div class="auth-form">
+                            <form class="signup" id="form" onsubmit="return validateForm()">
+                                <div class="form-div">
+                                    <div class="name-section">
+                                        <input class="textfields field-margin" type="text" placeholder="First Name" id="fname">
+                                        <input class="textfields" type="text" placeholder="Last Name" id="lname">
+                                    </div>
+                                    <small id="name_error"></small>
+                                    <input class="textfields" type="text" placeholder="Email" id="email">
+                                    <small id="email_error"></small>
+                                    <div class="radio-section">
+                                        <div class="pair"><span>Male </span><input id="male" name="gender" type="radio"></div>
+
+                                        <div class="pair"><span>Female</span><input id="female" name="gender" type="radio"></div>
+
+                                        <div class="pair"><span>Others</span><input id="Others" name="gender" type="radio"></div>
+
+                                    </div>
+                                    <small id="radio_error"></small>
+
+                                    <input class="textfields" type="text" placeholder="Phone Number" id="phone" maxlength="13">
+                                    <small id="phone_error"></small>
+                                    <input class="textfields" type="text" placeholder="Fax" id="fax" maxlength="13">
+                                    <small id="fax_error"></small>
+                                    <div class="button-section">
+                                        <small class="submit-status"></small>
+                                        <button class="button-secondary submit" id="submit_btn">Submit</button>
+                                    </div>
+                                    <small id=""></small>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/addcontact.js" type="text/javascript"></script>
+   
+</body>
+
+

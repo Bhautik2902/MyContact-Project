@@ -1,0 +1,181 @@
+@import url(./cssutilities.css);
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+}
+
+.overlay-section {
+    width: 100%;
+    height: 100vh;
+    background: var(--light);
+    display: flex;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    margin: auto;
+}
+
+.overlay-section .auth-container .closeIcon {
+    text-align: end;
+    position: relative;
+    left: 30px;    
+}
+
+.auth-container {
+    background: white;
+    padding: 0 30px 10px 30px;
+    border-radius: 10px;
+}
+
+.auth-container .auth-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: .5rem;
+}
+
+.auth-container .closeIcon img {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+small {
+    visibility: visible;
+    text-align: start;
+    margin-bottom: .8rem;
+    font-size: .75rem;
+}
+.form-div {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+.error input {
+    border: 1px solid red;   
+}
+
+.error {
+    visibility: visible;
+    padding-left: 2px;
+    color: red;
+    font-weight: 500;
+}    
+.radio-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio-section input[type='radio'] { 
+    transform: scale(1.4);    
+}
+
+.radio-section .pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.radio-section .pair span{
+    margin-right: .5rem;
+    color: var(--dark);
+}
+
+.terms-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    margin-bottom: 10px;
+    font-size: .8rem;
+    text-align: center;
+}
+.terms-section span {
+    margin-left: 2px;   
+}
+
+.submit:disabled {
+    border: 1px solid var(--border);
+}
+
+.auth-container .link {
+    margin-top: 1.5rem;
+    font-size: .8rem;
+    color: var(--dark);
+}
+
+.auth-container .link a {
+    font-weight: 600;
+    color: var(--pure);
+    text-decoration: none;
+    margin-left: 2px;
+}
+
+@media (max-width: 465px) {
+    .form-div .name-section .field-margin{
+        width: 100%;
+        margin-bottom: .7rem;
+    }
+
+    .form-div .name-section input{
+        width: 100%;
+    }
+}
+
+@media (max-width: 335px) {
+    .radio-section .pair span {
+        font-size: .8rem;
+        margin-right: .2rem;
+    }
+
+    .radio-section input[type='radio'] { 
+        transform: scale(1.2);    
+    }
+}
+
+
+    /* *** Login styles *** */
+
+.credentials {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form-login {
+    width: 100%;
+    
+}
+
+.field-login {
+    width: 20rem;
+    margin-bottom: .3rem;
+}
+
+.submit-login {
+    margin-top: 1.5rem;
+}
+
+.auth-form-login .general {
+    font-size: rem;
+}

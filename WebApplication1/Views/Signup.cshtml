@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<head>
+    <link href="~/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="overlay-section">
+        <div class="content">
+            <div class="auth-container">
+                <div class="closeIcon">
+                    <a href='@Url.Action("Index", "Home")'><img src="~/images/close.png" alt="Close button image"></a>
+                </div>
+                <div class="auth-header">
+                    <span>SignUp</span>
+
+                </div>
+                <div class="auth-form">
+                    <form class="signup" id="form" onsubmit="return validateForm()" action="https://localhost:44366/Signup/CreateUser" method="POST">
+                        <div class="form-div">
+                            <div class="name-section">
+                                <input class="textfields field-margin" type="text" placeholder="First Name" id="fname" name="firstname">
+                                <input class="textfields" type="text" placeholder="Last Name" id="lname" name="lastname">
+                            </div>
+                            <small id="name_error"></small>
+                            <input class="textfields" type="text" placeholder="Email" id="email" name="email">
+                            <small id="email_error"></small>
+                            <div class="radio-section">
+                                <div class="pair"><span>Male </span><input id="male" name="gender" type="radio" value="Male"></div>
+
+                                <div class="pair"><span>Female</span><input id="female" name="gender" type="radio" value="Female"></div>
+
+                                <div class="pair"><span>Others</span><input id="Others" name="gender" type="radio" value="Others"></div>
+
+                            </div>
+                            <small id="radio_error"></small>
+
+                            <input class="textfields" type="password" placeholder="Create Password" id="pass" name="password">
+                            <small id="pass_error"></small>
+                            <input class="textfields" type="password" placeholder="Re-enter Password" id="repass" name="repass">
+                            <small id="repass_error"></small>
+
+                            <div class="terms-section">
+                                <input type="checkbox" id="terms_check" name="checkme" onclick="btnstatus(this)">
+                                <span>Agree with terms & conditions</span>
+                            </div>
+
+                            <div class="button-section">
+                                <button class="button-secondary submit" id="submit_btn" disabled>Sign up</button>
+                            </div>
+                            <div class="status">
+                                <small id=""></small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="link">
+                    <p>Have an account? <a href="@Url.Action("Login", "Login")">Log in</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/js/signup.js" type="text/javascript"></script>
+</body>
+
