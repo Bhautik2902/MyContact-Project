@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class User
+    public class UserModel
     {
         public int userid { get; set; }
         [Required]
         [StringLength(100, MinimumLength = 2)]
+        [RegularExpression("@(^[a-zA-Z ]*$)", ErrorMessage = "Only alphabets are allowed.")]
         public string firstname { get; set; }
         [Required]
+        [RegularExpression("@(^[a-zA-Z ]*$)", ErrorMessage = "Only alphabets are allowed.")]
         [StringLength(100, MinimumLength = 2)]
         public string lastname { get; set; }
         [Required]
@@ -26,5 +28,7 @@ namespace WebApplication1.Models
         [Required]
         [Compare("password", ErrorMessage = "Password didn't match. Try again!")]
         public string repass { get; set; }
+
+        public DateTime date_of_register { get; set; }
     }
 }

@@ -62,14 +62,28 @@ form {
     height: 1.3rem;
 }
 
-small {
+/*for all field that show error on page*/
+.form-div .error-class {
     visibility: visible;
     text-align: start;
+    color: red;
     margin-bottom: .8rem;
     font-size: .75rem;
 }
+
 .form-div {
     width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-div .name-section {
+    display: flex;
+    flex-direction: row;
+    justify-content:;
+}
+
+.form-div .name-section .innername-section {
     display: flex;
     flex-direction: column;
 }
@@ -82,6 +96,9 @@ small {
     padding-left: 2px;
     color: red;
     font-weight: 500;
+    text-align: start;
+    font-size: .75rem;
+    margin-bottom: .8rem;
 }    
 .radio-section {
     display: flex;
@@ -120,7 +137,7 @@ small {
 }
 
 .auth-container .link {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     font-size: .8rem;
     color: var(--dark);
 }
@@ -131,6 +148,19 @@ small {
     text-decoration: none;
     margin-left: 2px;
 }
+
+.auth-container .auth-form .status {
+    text-align: center;
+    color: limegreen;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.auth-container .auth-form .status .server-error {
+    text-align: center;
+    color: red;
+}
+
 
 @media (max-width: 465px) {
     .form-div .name-section .field-margin{

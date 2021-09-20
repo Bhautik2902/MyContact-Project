@@ -11,7 +11,7 @@
         <div class="content">
             <div class="auth-container">
                 <div class="closeIcon">
-                    <a href='@Url.Action("Index", "Home")'><img src="~/images/close.png" alt="Close button image"></a>
+                    <a asp-action="Index" asp-controller="Home"><img src="~/images/close.png" alt="Close button image"></a>
                 </div>
                 <div class="auth-header">
                     <span>Login</span>
@@ -35,13 +35,11 @@
                 </div>
 
                 <div class="link">
-                    <p>Don't have an account? <a href='@Url.Action("Signup","Signup")'>Log in</a></p>
+                    <p>Don't have an account? <a asp-action="Signup" asp-controller="Signup">Log in</a></p>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="~/js/login.js" type="text/javascript"></script>
 
 </body>
 

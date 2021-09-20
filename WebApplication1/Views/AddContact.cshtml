@@ -12,11 +12,11 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a href="@Url.Action("Homepage","Home")"><img src="~/images/logo.PNG"></a>
+                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG"></a>
                         
                     </div>
                     <div class="button">
-                        <a href="@Url.Action("Index","Home")"><button class="button-primary">Log out</button></a>
+                        <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                     <div class="name-section">
                                         <input class="textfields field-margin" type="text" placeholder="First Name" id="fname">
                                         <input class="textfields" type="text" placeholder="Last Name" id="lname">
-                                    </div>
+                                    </div> 
                                     <small id="name_error"></small>
                                     <input class="textfields" type="text" placeholder="Email" id="email">
                                     <small id="email_error"></small>

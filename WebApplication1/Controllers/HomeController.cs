@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DBHelper;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -12,6 +13,7 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -27,6 +29,12 @@ namespace WebApplication1.Controllers
         {
             return View("Views/Homepage.cshtml");
         }
+
+       /* [Route("MyContacts/Contacts")]
+        public async Task<List<UserModel>> getAllUsers()
+        {
+
+        }*/
 
         public IActionResult Privacy()
         {
