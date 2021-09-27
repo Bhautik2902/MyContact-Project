@@ -17,7 +17,7 @@ namespace WebApplication1.EntityModels
         {
         }
 
-        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,13 +32,13 @@ namespace WebApplication1.EntityModels
         {
             modelBuilder.HasAnnotation("Relational:Collation", "English_India.1252");
 
-            modelBuilder.Entity<Contact>(entity =>
+            modelBuilder.Entity<Contacts>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Userid).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.Contact)
-                    .HasForeignKey<Contact>(d => d.Id)
+                    .HasForeignKey<Contacts>(d => d.Userid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("link_to_user_table");
             });

@@ -12,11 +12,11 @@ namespace WebApplication1.Models
         public int userid { get; set; }
         [Required]
         [StringLength(100, MinimumLength = 2)]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
+        [RegularExpression(@"(^[a-zA-Z ]+$)", ErrorMessage = "Only alphabets are allowed.")]
         public string firstname { get; set; }
         [Required]
+        [RegularExpression(@"(^[a-zA-Z ]+$)", ErrorMessage = "Only alphabets are allowed.")]
         [StringLength(100, MinimumLength = 2)]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
         public string lastname { get; set; }
         [Required]
         [EmailAddress]

@@ -1,4 +1,4 @@
-function validateForm() {
+function validateAddContactForm() {
     const fname = document.getElementById('fname');
     const lname = document.getElementById('lname');
     const email = document.getElementById('email');
@@ -48,7 +48,7 @@ function validateForm() {
         ele.innerText = "";
     }
 
-    //validation of email
+    //validation of email 
     if (email.value == "") {
         let ele = document.getElementById("email_error");                
         setError(ele, email, "Email cannot be blank");   
@@ -65,7 +65,6 @@ function validateForm() {
     }
 
     //validation of gender radio buttons
-    
     if (!(radio_male.checked || radio_female.checked || radio_others.checked)) {
         let ele = document.getElementById("radio_error");
         setError(ele, null, "Please select your gender");
@@ -76,7 +75,7 @@ function validateForm() {
         ele.innerText = "";
     }
     
-    //validation of password
+    //validation of phone
     if (phone.value == "") {
         let ele = document.getElementById("phone_error");
         setError(ele, phone, "Phone number required");    
@@ -84,9 +83,9 @@ function validateForm() {
     }
     else {
         let ele = document.getElementById("phone_error");
-        let pattern = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+        let pattern = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/;
         if (!phone.value.match(pattern)) {
-            setError(ele, phone, "Please provide valid number");
+            setError(ele, phone, "Please provide valid Contact number");
             return false;
         }
         else if (phone.value.length )
@@ -102,7 +101,7 @@ function validateForm() {
         let ele = document.getElementById("fax_error");
         let pattern = /^\+?[0-9]+$/;
         if (!fax.value.match(pattern)) {
-            setError(ele, fax, "Please provide valid fax number.");
+            setError(ele, fax, "Please provide valid fax.");
             return false;
         }
         ele.innerText = "";

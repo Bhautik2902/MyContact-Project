@@ -4,84 +4,50 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DBHelper;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class AddContactController : Controller
     {
-        // GET: AddContact
-        public ActionResult AddContact()
+        private readonly QueryHelper _queryHelper = null;
+        public AddContactController(QueryHelper queryHelper)
         {
+            _queryHelper = queryHelper;
+        }
+        // GET: AddContact
+        public ActionResult AddContact(int id)
+        {
+            ViewBag.id = id;
+            return View("Views/AddContact.cshtml");
+        }
+        
+    
+        // POST: AddContact/Create
+        [HttpPost]
+        public async Task<ActionResult> CreateContact(ContactModel contact, int Id)
+        {
+            ViewBag.id = Id;
+            if (ModelState.IsValid)
+            {
+                int id = await _queryHelper.addContact(contact, Id);
+                // if positive id, query successful.
+                if (id > 0)
+                {
+                    ViewBag.isSuccess = 1;
+                    ViewBag.message = "Contact added successfully!";
+                    return View("Views/AddContact.cshtml");
+                }
+                else 
+                {
+                    ViewBag.isSuccess = 0;
+                    ViewBag.message = "Something went wrong at server. Please try again later!";
+                    return View("Views/AddContact.cshtml");
+                }
+            }
             return View("Views/AddContact.cshtml");
         }
 
-        // GET: AddContact/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AddContact/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AddContact/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AddContact/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AddContact/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AddContact/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AddContact/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

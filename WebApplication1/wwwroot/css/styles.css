@@ -192,9 +192,9 @@ form {
     flex-direction: column;
 }
 
-.auth-form-login {
-    width: 100%;
-    
+.server-error {
+    color: red;
+    margin-top: 5px;
 }
 
 .field-login {
@@ -204,8 +204,4 @@ form {
 
 .submit-login {
     margin-top: 1.5rem;
-}
-
-.auth-form-login .general {
-    font-size: rem;
 }

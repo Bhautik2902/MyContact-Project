@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.DBHelper;
+using WebApplication1.EntityModels;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -13,11 +14,12 @@ namespace WebApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly QueryHelper _queryHelper = null;
+        public HomeController(ILogger<HomeController> logger, QueryHelper queryHelper)
         {
             _logger = logger;
+            _queryHelper = queryHelper;
+
         }
 
         public IActionResult Index()
@@ -25,9 +27,21 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult Homepage()
+        
+        public ViewResult Homepage(int id)
         {
-            return View("Views/Homepage.cshtml");
+            var user = _queryHelper.getUser(id);
+            if (user != null)
+            {
+                ViewBag.isSuccess = true;
+                return View("Views/Homepage.cshtml", user);
+            }
+            else
+            {
+                ViewBag.isSuccess = false;
+                return View("Views/Homepage.cshtml", user);
+            }
+            
         }
 
        /* [Route("MyContacts/Contacts")]

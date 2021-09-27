@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.EntityModels
 {
-    public partial class Contact
+    public partial class Contacts
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
-        public int? Userid { get; set; }
+        public int Userid { get; set; }
         [Column("First_name")]
         public string FirstName { get; set; }
         [Column("Last_name")]
@@ -26,7 +26,7 @@ namespace WebApplication1.EntityModels
         [Column(TypeName = "character varying")]
         public string Fax { get; set; }
 
-        [ForeignKey(nameof(Id))]
+        [ForeignKey(nameof(Userid))]
         [InverseProperty(nameof(User.Contact))]
         public virtual User IdNavigation { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿
+﻿@using WebApplication1.Models
+@model UserModel
 @{
     ViewData["Title"] = "Homepage";
 }
@@ -6,60 +7,69 @@
 <head>
     <link href="~/css/style_homepage.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="wrapper">
-        <div class="container">
-            <div class="header">
-                <div class="flex-wrap">
-                    <div class="logo">
-                        <img src="~/images/logo.PNG" alt="Logo image"/>
-                    </div>
-                    <div class="button">
-                        <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="main">
-                <div class="title-space">
-                    <h1 class="title">Greetings..</h1>
-                    <div class="name">
-                        <span class="fname">Bhautik</span>
-                        <span class="lname">Savaliya</span>
-                    </div>
-                </div>
-
-                <div class="details">
-                    <div class="content-wrap">
-                        <span class="sectionTitle">
-                            Account Details
-                        </span>
-
-                        <div class="items" title="User name">
-                            <img src="~/images/personal.png" alt="Personal Information Icon"/>
-                            <span id="fname">bhautik</span>
-                            <span id="lname">savaliya</span>
+@if(!ViewBag.isSuccess)
+{
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <div class="header">
+                    <div class="flex-wrap">
+                        <div class="logo">
+                            <img src="~/images/logo.PNG" alt="Logo image" />
                         </div>
-
-                        <div class="items" title="User Gender" >
-                            <img src="~/images/gender.png" alt="Gender Icon"/>
-                            <span id="gender">Male</span>
-                        </div>
-
-                        <div class="items" title="Date of registration">
-                            <img src="~/images/calender.png" alt="Date Icon"/>
-                            <span id="">29 Aug, 2021</span>
+                        <div class="button">
+                            <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="button bottom-btn">
-                    <a asp-action="AddContact" asp-controller="AddContact"><button class="button-primary">Add Contact</button></a>
+                <div class="main">
+                    <div class="title-space">
+                        <h1 class="title">Greetings..</h1>
+                        <div class="name">
+                            <span class="fname">@Model.firstname</span>
+                            <span class="lname">@Model.lastname</span>
+                        </div>
+                    </div>
 
-                    <a asp-action="MyContacts" asp-controller="MyContacts"><button class="button-primary">My Contacts</button></a>
+                    <div class="details">
+                        <div class="content-wrap">
+                            <span class="sectionTitle">
+                                Account Details
+                            </span>
+
+                            <div class="items" title="User name">
+                                <img src="~/images/personal.png" alt="Personal Information Icon" />
+                                <span id="fname">@Model.firstname</span>
+                                <span id="lname">@Model.lastname</span>
+                            </div>
+
+                            <div class="items" title="User Gender">
+                                <img src="~/images/gender.png" alt="Gender Icon" />
+                                <span id="gender">@Model.gender</span>
+                            </div>
+
+                            <div class="items" title="Date of registration">
+                                <img src="~/images/calender.png" alt="Date Icon" />
+                                <span id="">@Model.date_of_register.ToString("dd MMM, yyyy")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button bottom-btn">
+                        <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@Model.userid"><button class="button-primary">Add Contact</button></a>
+
+                        <a asp-action="MyContacts" asp-controller="MyContacts"><button class="button-primary">My Contacts</button></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
+}
+else
+{
+    <script>window.alert("There is a problem at server side. Please try again later!");</script>
+}
+
 

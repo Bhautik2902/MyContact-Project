@@ -90,6 +90,14 @@ small {
     flex-direction: column;
 }
 
+.form-div .error-class {
+    visibility: visible;
+    text-align: start;
+    color: red;
+    margin-bottom: .8rem;
+    font-size: .75rem;
+}
+
 .error input {
     border: 1px solid red;   
 }
@@ -122,11 +130,22 @@ small {
 
 .button-section {
     text-align: center;
-    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 5rem;
+}
+
+.auth-container .auth-form .status {
+    text-align: center;
+    color: limegreen;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.auth-container .auth-form .status .server-error {
+    text-align: center;
+    color: red;
 }
 
 @media (max-width: 465px) {

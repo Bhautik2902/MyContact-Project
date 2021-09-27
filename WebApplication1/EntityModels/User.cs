@@ -23,9 +23,9 @@ namespace WebApplication1.EntityModels
         [Column(TypeName = "character varying")]
         public string Password { get; set; }
         [Column("Date_of_Joining", TypeName = "date")]
-        public DateTime? DateOfJoining { get; set; }
+        public DateTime DateOfJoining { get; set; }
 
         [InverseProperty("IdNavigation")]
-        public virtual Contact Contact { get; set; }
+        public virtual Contacts Contact { get; set; }
     }
 }

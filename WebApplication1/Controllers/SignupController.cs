@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
                 else if (id == 0)
                 {
                     ViewBag.isSuccess = 0;
-                    ViewBag.message = "Something went wront at server end. Please try again in a while";
+                    ViewBag.message = "Something went wront at server. Please try again later";
                     return View("Views/signup.cshtml");
                 }
                 else    // negative id, user already exist.

@@ -2,86 +2,49 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DBHelper;
+using WebApplication1.EntityModels;
 
 namespace WebApplication1.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: LoginController
+        private readonly QueryHelper _queryHelper = null;
+        public LoginController(QueryHelper queryHelper)
+        {
+            _queryHelper = queryHelper;
+        }
+
         public ActionResult Login()
         {
             return View("Views/Login.cshtml");
         }
 
         // GET: LoginController/Details/5
-        public ActionResult Details(int id)
+        public async Task<RedirectToActionResult> Details(string email, string password)
         {
-            return View();
+            if (email == null || password == null)
+            {
+                TempData["errormsg"] = "Both field required!";
+            }
+            else
+            {
+                string hashedpass = _queryHelper.getHash(password);
+                var userid = _queryHelper.getUserId(email, hashedpass);
+                if (userid > 0)
+                {
+                    return RedirectToAction("Homepage", "Home", new { id = userid });
+                }
+                else
+                {
+                    TempData["errormsg"] = "Credentials were incorrect. Try again!";
+                }
+            }
+            return RedirectToAction("Login", "Login");
         }
 
-        // GET: LoginController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LoginController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LoginController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: LoginController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LoginController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LoginController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
+    } 
 }

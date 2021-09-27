@@ -1,10 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 
 <head>
-<link href="~/css/styles.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="overlay-section">
@@ -17,29 +16,30 @@
                     <span>Login</span>
                 </div>
                 <div class="auth-form">
-                    <form action="" class="login" id="loginform" onsubmit="return validateForm()">
+                    <form class="login" id="form" onsubmit="return validateLogin()" method="GET" asp-action="Details">
                         <div class="credentials">
-                            <input class="textfields field-login" type="text" placeholder="Email" id="email">
-                            <small id="email_error"></small>
+                            <input class="textfields field-login" type="text" placeholder="Email" id="email" name="email">
+                            <span id="email_error"></span>
 
-                            <input class="textfields" type="password" placeholder="Password" id="pass">
-                            <small id="pass_error"></small>
+                            <input class="textfields" type="password" placeholder="Password" id="pass" name="password">
+                            <span id="pass_error"></span>
                         </div>
                         <div class="button-section">
                             <button class="button-secondary submit-login">Log in</button>
                         </div>
-                        <div class="general">
-                            <small></small>
+                        <div class="server-error">
+                            <small>@TempData["errormsg"]</small>
                         </div>
                     </form>
                 </div>
 
                 <div class="link">
-                    <p>Don't have an account? <a asp-action="Signup" asp-controller="Signup">Log in</a></p>
+                    <p>Don't have an account? <a asp-action="Signup" asp-controller="Signup">Sign up</a></p>
                 </div>
             </div>
         </div>
     </div>
 
+    
 </body>
 
