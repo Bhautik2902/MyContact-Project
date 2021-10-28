@@ -110,6 +110,37 @@ namespace WebApplication1.DBHelper
             }
         }
 
+        // get contact object using contact id.
+        public ContactModel getContact(int id)
+        {
+            try
+            {
+                var contact = _context.Contacts.Where(m => m.Id == id).SingleOrDefault();
+                /*Here user cannot be null as id will be there for every user who logged in. If server is not connected then it will create 
+                   Exception and catch block will be executed. So no need check user is null or not.*/
+
+                // copy data from User to UserModel
+                var contactmodel = new ContactModel
+                {
+                    id = contact.Id,
+                    userid = contact.Userid,
+                    firstname = contact.FirstName,
+                    lastname = contact.LastName,
+                    Email = contact.Email,
+                    gender = contact.Gender,
+                    phone = contact.Phone,
+                    fax = contact.Fax
+
+                };
+                return contactmodel;
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                return null;
+            }
+        }
+       
         // get user id using email and password.
         public int getUserId(string email, string pass)
         {
@@ -125,8 +156,83 @@ namespace WebApplication1.DBHelper
             }
 
         }
+        // get all contact of perticular user.
+        public async Task<List<ContactModel>> getAllContacts(int id)
+        {
+            try
+            {
+                var contacts = new List<ContactModel>();
+                var allContacts = await _context.Contacts.Where(p => p.Userid == id).ToListAsync();
+                if (allContacts?.Any() == true)
+                {
+                    foreach (var contact in allContacts)
+                    {
+                        contacts.Add(new ContactModel
+                        {
+                            id = contact.Id,
+                            userid = contact.Userid,
+                            firstname = contact.FirstName,
+                            lastname = contact.LastName,
+                            Email = contact.Email,
+                            gender = contact.Gender, 
+                        }); 
+                    }
+                }
+                return contacts;
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                return null;
+            }
+         }
 
-        // utility methods.
+        // Delete selected contects.
+        public async Task<string> deleteSelected(string[] selectedids)
+        {
+            try
+            {
+                foreach (var id in selectedids)
+                {
+                    var contact = await _context.Contacts.FindAsync(Convert.ToInt32(id));
+                    _context.Contacts.Remove(contact);
+                    await _context.SaveChangesAsync();
+                }
+                return "success";
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                return e.Message;
+            }
+        }
+
+        // delete individual contact
+        public async Task<string> deleteIndividual(int c_id)
+        {
+            try
+            {
+                var contact = await _context.Contacts.FindAsync(c_id);
+                if (contact != null)
+                {
+                    _context.Contacts.Remove(contact);
+                    await _context.SaveChangesAsync();
+                    return "Success";      
+                }
+                else
+                {
+                    return "Not found";        // Not found
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                return e.Message;         // error occured
+            }
+            
+        }
+
+ //============================================================ utility methods.=============================================================
         public bool isUserExist(string targetemail)
         {
             try
@@ -155,33 +261,6 @@ namespace WebApplication1.DBHelper
 
             return hashedpass;
         }
-        public async Task<List<UserModel>> getAllUsers()
-        {
-            try
-            {
-                var users = new List<UserModel>();
-                var allUsers = await _context.User.ToListAsync();
-                if (allUsers?.Any() == true)
-                {
-                    foreach (var user in allUsers)
-                    {
-                        users.Add(new UserModel
-                        {
-                            userid = user.Userid,
-                            firstname = user.FirstName,
-                            lastname = user.LastName,
-                            Email = user.Email,
-                            gender = user.Gender,
-                        });
-                    }
-                }
-                return users;
-            }
-            catch (Exception e)
-            {
-                Debug.Write(e.Message);
-            }
-            return null;
-        }  
+          
     }
 }

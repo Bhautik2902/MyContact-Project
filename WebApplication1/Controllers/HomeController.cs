@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.Clear();
             return View();
         }
 
@@ -43,13 +45,6 @@ namespace WebApplication1.Controllers
             }
             
         }
-
-       /* [Route("MyContacts/Contacts")]
-        public async Task<List<UserModel>> getAllUsers()
-        {
-
-        }*/
-
         public IActionResult Privacy()
         {
             return View();

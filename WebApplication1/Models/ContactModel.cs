@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,5 +30,8 @@ namespace WebApplication1.Models
         [Required]
         [Phone]
         public string fax { get; set; }
+
+        public SelectListItem selectedItems { get; set; }
+
     }
 }

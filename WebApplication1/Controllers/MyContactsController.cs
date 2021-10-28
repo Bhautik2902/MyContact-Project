@@ -2,43 +2,59 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DBHelper;
+using WebApplication1.EntityModels;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class MyContactsController : Controller
     {
+        private readonly QueryHelper _queryHelper = null;
+        public MyContactsController(QueryHelper queryHelper)
+        {
+            _queryHelper = queryHelper;
+        }
         // GET: MyContactsController
-        public ActionResult MyContacts()
+        public async Task<ViewResult> MyContacts(int id)
         {
-            return View("Views/MyContacts.cshtml");
+            ViewBag.id = id;
+            var allContacts = await _queryHelper.getAllContacts(id); 
+            return View("Views/MyContacts.cshtml", allContacts);
         }
 
-        // GET: MyContactsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: MyContactsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MyContactsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<int> deleteSelectedContacts(string selectedIds)
         {
-            try
+            string selectedIds_str = selectedIds.Substring(1, selectedIds.Length - 2);
+            string[] ids = selectedIds_str.Split(',');
+            
+            string status = await _queryHelper.deleteSelected(ids);   
+            
+            TempData["error_msg"] = status;
+            return 1;
+        }
+
+        [HttpPost]
+        public async Task<int> DeleteThisOne(int c_id, int u_id)
+        {
+            string status = await _queryHelper.deleteIndividual(c_id);
+            if (status == "Success")
             {
-                return RedirectToAction(nameof(Index));
+                return 1;  // success
             }
-            catch
+            else if (status == "Not found")
             {
-                return View();
+                TempData["error_msg"] = status;
+                return 0;  // not found
+            }
+            else
+            {
+                TempData["error_msg"] = status;
+                return -1;  // error occured
             }
         }
 

@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
             return View("Views/Login.cshtml");
         }
 
-        // GET: LoginController/Details/5
+        // get credentials from login form and varify details.
         public async Task<RedirectToActionResult> Details(string email, string password)
         {
             if (email == null || password == null)
@@ -36,6 +36,9 @@ namespace WebApplication1.Controllers
                 var userid = _queryHelper.getUserId(email, hashedpass);
                 if (userid > 0)
                 {
+                    HttpContext.Session.SetString("Email", email);
+                    HttpContext.Session.SetString("Password", hashedpass);
+
                     return RedirectToAction("Homepage", "Home", new { id = userid });
                 }
                 else

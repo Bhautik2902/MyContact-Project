@@ -4,15 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DBHelper;
 
 namespace WebApplication1.Controllers
 {
     public class ViewContactController : Controller
     {
-        // GET: ViewContactController
-        public ActionResult ViewContact()
+        private readonly QueryHelper _queryHelper = null;
+        public ViewContactController(QueryHelper queryHelper)
         {
-            return View("Views/ViewContact.cshtml");
+            _queryHelper = queryHelper;
+        }
+        // GET: ViewContactController
+        public ActionResult ViewContact(int contactid, int userid)
+        {
+            var contact = _queryHelper.getContact(contactid);
+            ViewBag.id = userid;
+            return View("Views/ViewContact.cshtml", contact);
         }
 
         // GET: ViewContactController/Details/5

@@ -1,4 +1,4 @@
-﻿
+﻿@model ContactModel
 @{
     ViewData["Title"] = "ViewContact";
 }
@@ -12,7 +12,7 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG" alt="Logo image"></a>
+                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.id"><img src="~/images/logo.PNG" alt="Logo image"></a>
 </div>
                     <div class="button">
                         <a asp-action="Homepage" asp-controller="Home"><button class="button-primary">Log out</button></a>
@@ -24,8 +24,8 @@
                 <div class="title-space">
                     <img src="~/images/person.png" alt="Person logo">
                     <div class="name">
-                        <span id="fname">Bhautik</span>
-                        <span id="lname">Savaliya</span>
+                        <span id="fname">@Model.firstname</span>
+                        <span id="lname">@Model.lastname</span>
                     </div>
                 </div>
 
@@ -37,26 +37,26 @@
 
                         <div class="items">
                             <img src="~/images/email.png" title="Contact's Email Address" alt="Email logo">
-                            <span id="fname" title="Contact's Email Address" contenteditable="true">bhautiksavaliya2000@gmail.com</span>
+                            <span id="email" title="Contact's Email Address" contenteditable="true" >@Model.Email</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
                             <p class="emailcopy"></p>
                         </div>
 
                         <div class="items" title="Contact's Gender">
                             <img src="~/images/gender.png" alt="Gender logo">
-                            <span id="fname" contenteditable="true">Male</span>
+                            <span id="gender" contenteditable="true">@Model.gender</span>
                         </div>
 
                         <div class="items">
                             <img src="~/images/phone.png" title="Contact's Phone Number" alt="Phone logo">
-                            <span id="fname" title="Contact's Phone Number" contenteditable="true">+914559987867</span>
+                            <span id="phone" title="Contact's Phone Number" contenteditable="true">@Model.phone</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
                             <p class="phonecopy"></p>
                         </div>
 
                         <div class="items">
                             <img src="~/images/fax.png" title="Contact's fax" alt="Fax-machine logo">
-                            <span id="fname" title="Contact's fax" contenteditable="true">+1-212-9876543</span>
+                            <span id="fax" title="Contact's fax" contenteditable="true">@Model.fax</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
                             <p class="faxcopy"></p>
                         </div>
@@ -70,4 +70,21 @@
         </div>
     </div>
 </body>
+
+<script>
+    function copyClipboard() {
+        /* Get the text field */
+        var copyText = document.getElementById("myInput"); 
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
 

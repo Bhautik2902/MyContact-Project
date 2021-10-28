@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<WebApplication1.Models.ContactModel>
 @{
     ViewData["Title"] = "My Contacts";
 }
@@ -12,7 +12,7 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG" alt="Logo image"></a>
+                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.id"><img src="~/images/logo.PNG" alt="Logo image"></a>
                     </div>
                     <div class="button">
                         <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
@@ -22,113 +22,161 @@
 
             <div class="main">
                 <div class="content">
-                    <div class="title">
-                        <h1>My Contacts</h1>
-                    </div>
-                    <div class="table-container">
-                        <table class="content-table">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox" class="selectAll"></th>
-                                    <th>No.</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>View</th>
-                                </tr>
-                            </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" class="selectContact"></td>
-                                    <td>1</td>
-                                    <td>Bhautik</td>
-                                    <td>Savaliya</td>
-                                    <td>bhautiksavaliya2000@gmail.com</td>
-                                    <td><button class="button-primary btn">Edit</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="button bottom-btn">
-                        <a href=""><button class="button-primary">Delete</button></a>
+                    @*if model has records then..*@
+                    @if (Model.Count() > 0)
+                    {
+                        <div class="title" id="pagetitle">
+                            <h1>My Contacts</h1>
+                        </div>
 
-                        <a asp-action="AddContact" asp-controller="AddContact"><button class="button-primary">Add New</button></a>
-                    </div>
+                        <div class="table-container">
+                            <table class="content-table">
+                                <thead id="table-header">
+                                    <tr>
+                                        <th><input type="checkbox" class="selectAll" title="Select all" id="SelectAll"></th>
+                                        <th>Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Gender</th>
+                                        <th>Email</th>
+                                        <th>View</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="table-rows">
+
+                                    @foreach (var contact in Model)
+                                    {
+                                        <tr id="del_@contact.id">  @* hide row using this id on delete*@
+                                            <td>
+                                                <input type="checkbox" class="selectContact" id="SelectOne" onclick="" value="@contact.id">
+                                            </td>
+                                            <td>@contact.id</td>
+                                            <td>@contact.firstname</td>
+                                            <td>@contact.lastname</td>
+                                            <td>@contact.gender</td>
+                                            <td>@contact.Email</td>
+                                            <td><a asp-action="ViewContact" asp-controller="ViewContact" asp-route-contactid="@contact.id" asp-route-userid="@ViewBag.id"><button class="button-primary btn">Edit</button></a></td>
+                                            <td><button class="button-primary btn deletebtn" onclick="DeleteContact(@contact.id)">Delete</button></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>                        
+                        </div>
+
+                        <div class="button bottom-btn">
+                            <input type="submit" class="button-primary" id="deletebtn"onclick="DeleteSelected()" form="selectedItem" value="Delete" />
+                            
+                            <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id" id="addnewlink"><button class="button-primary">Add New</button></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <img src="~/images/NoData.PNG" width="300px" height="270px" alt="No data here image"/>
+                        <h3>Nothing to show yet!</h3>
+
+                        <div class="button bottom-btn"> 
+                            <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    // select and deselect all checkboxes.
+    $(".selectAll").change(function () {
+        $(".selectContact").prop("checked", $(this).prop("checked"))
+    })
+
+    $("#table-rows tr td input[type=checkBox]").click(function () {
+        UpdateSelectAllCheckBox();
+    })
+</script>
+
+<script>
+    // update 'SelectAll' checkbox in table header according to rows
+    function UpdateSelectAllCheckBox() {
+
+        if ($("#table-rows tr td input[type=checkBox]:checked").length == $("#table-rows tr td input[type=checkBox]").length ){
+            $("#SelectAll").attr("checked", "checked");
+        }
+        else {
+            $("#SelectAll").removeAttr("checked");
+        }
+    }
+
+    function DeleteContact(contact_id) {
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                url: '/MyContacts/DeleteThisOne',
+                type: 'POST',
+                dataType: 'JSON',
+                data: { "c_id": contact_id, "u_id": @ViewBag.id },
+                success: function (data, status) {
+                    $("#del_" + contact_id).hide();
+                },
+                error: function (xhr, ajaxoption, thrownerror) {
+                    alert(thrownerror);
+                }
+            });
+        }
+    }
+
+    function DeleteSelected() {
+        var checked = $("#table-rows tr td input[type=checkBox]:checked");
+        if (checked.length > 0) {
+            if (confirm("Are you sure?")) {
+                var idlist = [];
+                checked.each(function () {
+                    // read table data. -> current row, table data, second column contains id, in text format.
+                    var contactid = (parseInt($(this).closest("tr").find("td").eq(1).text()));
+                    idlist.push(contactid);
+
+                });
+
+                // call deleteSelected action method
+                $.ajax({
+                    url: '/MyContacts/deleteSelectedContacts',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: { "selectedIds": JSON.stringify(idlist) },
+                    success: function (data, status) {
+                        // create row id and hide that row.
+                        idlist.forEach(function (id) {
+                            $("#del_" + id).hide();
+                        })
+
+                        if ($("#SelectAll").prop("checked")) {
+                            $("#pagetitle").hide();
+                            $("#table-header").hide();
+                            $("#deletebtn").hide();
+                            $("#addnewlink").hide();
+
+                            $(".content").html(
+                                '<img id="nodataimg" width="300px" height="270px" alt="No data here image"/>   \
+                                 <h3>Nothing to show yet!</h3>  \
+                                 <div class="button bottom-btn">  \
+                                 <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
+                                 </div>'
+                            );
+                            $("#nodataimg").attr("src", "~/images/NoData.PNG");
+                        }
+
+                    },
+                    error: function (xhr, ajaxoption, thrownerror) {
+                        alert(thrownerror);
+                    }
+
+                });
+            }
+        }
+    }
+</script>

@@ -68,7 +68,6 @@ div {
 
 .table-container {
     width: fit-content;
-    /* max-width: 100rem;   */
     overflow-y: auto;
     max-height: 450px;
     text-align: center;

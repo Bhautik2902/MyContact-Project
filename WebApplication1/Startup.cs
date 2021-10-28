@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.DBHelper;
 using WebApplication1.EntityModels;
+using Microsoft.AspNetCore.Session;
 
 namespace WebApplication1
 {
@@ -31,6 +32,11 @@ namespace WebApplication1
             services.AddScoped<QueryHelper, QueryHelper>();
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddDistributedMemoryCache();
+            services.AddSession(p =>
+            {
+                p.IdleTimeout = TimeSpan.FromMinutes(15);
+            });
 #endif
         }
 
@@ -54,12 +60,16 @@ namespace WebApplication1
 
             app.UseAuthorization();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
+            
         }
     }
 }
