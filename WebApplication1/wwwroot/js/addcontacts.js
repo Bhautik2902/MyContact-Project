@@ -88,7 +88,10 @@ function validateAddContactForm() {
             setError(ele, phone, "Please provide valid Contact number");
             return false;
         }
-        else if (phone.value.length )
+        else if (phone.value.length < 8) {
+            setError(ele, phone, "Phone number is too short");
+            return false;
+        }
         ele.innerText = "";
     }
 
@@ -102,6 +105,10 @@ function validateAddContactForm() {
         let pattern = /^\+?[0-9]+$/;
         if (!fax.value.match(pattern)) {
             setError(ele, fax, "Please provide valid fax.");
+            return false;
+        }
+        else if (phone.value.length < 8) {
+            setError(ele, phone, "Fax number is too short");
             return false;
         }
         ele.innerText = "";

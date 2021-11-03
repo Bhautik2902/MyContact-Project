@@ -60,7 +60,7 @@
                     <div class="button bottom-btn">
                         <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@Model.userid"><button class="button-primary">Add Contact</button></a>
 
-                        <a asp-action="MyContacts" asp-controller="MyContacts" asp-route-id="@Model.userid"><button class="button-primary">My Contacts</button></a>
+                        <a asp-action="MyContacts" asp-controller="MyContacts" asp-route-id="@Model.userid" asp-route-pageNumber="1"><button class="button-primary">My Contacts</button></a>
                     </div>
                 </div>
             </div>

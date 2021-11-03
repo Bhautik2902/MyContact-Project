@@ -232,6 +232,36 @@ namespace WebApplication1.DBHelper
             
         }
 
+        // update contact in database.
+        public async Task<string> updateContactDetails(int id, string fname, string lname, string email, string gender, string phone, string fax)
+        {
+            try
+            {
+                var contact = await _context.Contacts.FindAsync(id);
+                if (contact != null)
+                {
+                    contact.FirstName = fname;
+                    contact.LastName = lname;
+                    contact.Email = email;
+                    contact.Gender = gender;
+                    contact.Phone = phone;
+                    contact.Fax = fax;
+                    await _context.SaveChangesAsync();
+                    _context.Contacts.Update(contact);
+
+                    return "Updated Successfully!";
+                }
+                else
+                {
+                    return "Contact not found!";
+                }
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
  //============================================================ utility methods.=============================================================
         public bool isUserExist(string targetemail)
         {
@@ -261,6 +291,10 @@ namespace WebApplication1.DBHelper
 
             return hashedpass;
         }
-          
+        
+        public CoreDbContext getDBContext()
+        {
+            return _context;
+        }
     }
 }

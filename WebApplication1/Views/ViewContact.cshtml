@@ -12,7 +12,7 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.id"><img src="~/images/logo.PNG" alt="Logo image"></a>
+                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.user_id"><img src="~/images/logo.PNG" alt="Logo image"></a>
 </div>
                     <div class="button">
                         <a asp-action="Homepage" asp-controller="Home"><button class="button-primary">Log out</button></a>
@@ -23,9 +23,9 @@
             <div class="main">
                 <div class="title-space">
                     <img src="~/images/person.png" alt="Person logo">
-                    <div class="name">
-                        <span id="fname">@Model.firstname</span>
-                        <span id="lname">@Model.lastname</span>
+                    <div class="name" id="name-section">
+                        <span id="fname" contenteditable="true">@Model.firstname</span>
+                        <span id="lname" contenteditable="true">@Model.lastname</span>
                     </div>
                 </div>
 
@@ -35,26 +35,26 @@
                             Contact Details
                         </span>
 
-                        <div class="items">
+                        <div class="items" id="email-section">
                             <img src="~/images/email.png" title="Contact's Email Address" alt="Email logo">
-                            <span id="email" title="Contact's Email Address" contenteditable="true" >@Model.Email</span>
+                            <span id="email" title="Contact's Email Address" contenteditable="true">@Model.Email</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
                             <p class="emailcopy"></p>
                         </div>
 
-                        <div class="items" title="Contact's Gender">
+                        <div class="items" title="Contact's Gender" id="gender-section">
                             <img src="~/images/gender.png" alt="Gender logo">
                             <span id="gender" contenteditable="true">@Model.gender</span>
                         </div>
 
-                        <div class="items">
+                        <div class="items" id="phone-section">
                             <img src="~/images/phone.png" title="Contact's Phone Number" alt="Phone logo">
                             <span id="phone" title="Contact's Phone Number" contenteditable="true">@Model.phone</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
                             <p class="phonecopy"></p>
                         </div>
 
-                        <div class="items">
+                        <div class="items" id="fax-section">
                             <img src="~/images/fax.png" title="Contact's fax" alt="Fax-machine logo">
                             <span id="fax" title="Contact's fax" contenteditable="true">@Model.fax</span>
                             <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="button bottom-btn">
-                    <a href="./addcontact.html"><button class="button-primary">Save</button></a>
+                    <button class="button-primary" onclick="updateContact()">Save</button>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
 <script>
     function copyClipboard() {
         /* Get the text field */
-        var copyText = document.getElementById("myInput"); 
+        var copyText = document.getElementById("myInput");
 
         /* Select the text field */
         copyText.select();
@@ -85,6 +85,78 @@
 
         /* Alert the copied text */
         alert("Copied the text: " + copyText.value);
+    }
+
+    function updateContact() {
+
+        // get text from each element
+        var fname_val = $("#name-section #fname").text();
+        var lname_val = $("#name-section #lname").text();
+        var email_val = $("#email-section span").text();
+        var gender_val = $("#gender-section span").text();
+        var phone_val = $("#phone-section span").text();
+        var fax_val = $("#fax-section span").text();
+
+        // validate all values.       // handle for empty string
+        let pattern = /^[a-zA-Z ]*$/;
+        if (fname_val.length < 3) {
+            alert("First name is too short");
+            return;
+        }
+        else if (lname_val.length < 3) {
+            alert("Last name is too short");
+            return;
+        }
+        else if (!fname_val.match(pattern) || !lname_val.match(pattern)) {
+            alert("Only alphabets are allowed");
+            return;
+        }
+
+        pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!email_val.match(pattern)) {
+            alert("Please provide valid Email");
+            return;
+        }
+
+        if (gender_val != "Male" && gender_val != "Female" && gender_val != "Others") {
+            alert("Please enter value from 'Male', 'Female' or 'Others' only.");
+            return;
+        }
+
+        pattern = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/;
+        if (!phone_val.match(pattern)) {
+            alert("Please provide valid Phone Number");
+            return;
+        }
+        else if (phone_val.length < 8) {
+            alert("Phone number is too short");
+            return;
+        }
+
+        pattern = /^\+?[0-9]+$/;
+        if (!fax_val.match(pattern)) {
+            alert("Please provide valid Fax Number");
+            return;
+        }
+        else if (fax_val.length < 8) {
+            alert("Fax number is too short");
+            return;
+        }
+
+        // make AJAX call to update action
+        $.ajax({
+            url: '/ViewContact/updateContact',
+            type: 'POST',
+            dataType: 'text',
+            data: { "userid": @ViewBag.contact_id, "fname": fname_val, "lname": lname_val, "email": email_val, "gender": gender_val, "phone": phone_val, "fax": fax_val },
+            success: function (data, status) {
+                alert(data);
+            },
+            error: function (xhr, ajaxoption, thrownerror) {
+                alert(thrownerror);
+            }
+        });
+        
     }
 </script>
 

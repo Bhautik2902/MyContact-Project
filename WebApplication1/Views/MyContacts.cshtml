@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<WebApplication1.Models.ContactModel>
 @{
     ViewData["Title"] = "My Contacts";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.PagerInfo != null)
+    {
+        pager = ViewBag.PagerInfo;
+        pageNo = pager.currentPage;
+    }
 }
 
 <head>
@@ -21,10 +30,9 @@
             </div>
 
             <div class="main">
-                <div class="content">
-
+                <div class="content" id="page-content">
                     @*if model has records then..*@
-                    @if (Model.Count() > 0)
+                    @if (pager.totalItem > 0)
                     {
                         <div class="title" id="pagetitle">
                             <h1>My Contacts</h1>
@@ -49,7 +57,8 @@
 
                                     @foreach (var contact in Model)
                                     {
-                                        <tr id="del_@contact.id">  @* hide row using this id on delete*@
+                                        <tr id="del_@contact.id">
+                                            @* hide row using this id on delete*@
                                             <td>
                                                 <input type="checkbox" class="selectContact" id="SelectOne" onclick="" value="@contact.id">
                                             </td>
@@ -64,21 +73,50 @@
                                     }
 
                                 </tbody>
-                            </table>                        
+                            </table>
+
                         </div>
 
                         <div class="button bottom-btn">
-                            <input type="submit" class="button-primary" id="deletebtn"onclick="DeleteSelected()" form="selectedItem" value="Delete" />
-                            
+                            <input type="submit" class="button-primary" id="deletebtn" onclick="DeleteSelected()" form="selectedItem" value="Delete" />
+
                             <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id" id="addnewlink"><button class="button-primary">Add New</button></a>
                         </div>
+
+                        <div class="page-navigator">
+                            @if (pager.totalPage > 0)
+                            {
+                                <ul class="pagination justify-content-end">
+                                    @if (pager.currentPage > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@(pager.currentPage-1)">Previous</a>
+                                        </li>
+                                    }
+                                    @for (var pge = pager.firstPage; pge <= pager.lastPage; pge++)
+                                    {
+                                        <li class="page-item @(pge == pager.currentPage ? "active" : "")">
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@pge">@pge</a>
+                                        </li>
+                                    }
+                                    @if (pager.currentPage < pager.totalPage)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@(pager.currentPage+1)">Next</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+
+                        </div>
+
                     }
                     else
                     {
-                        <img src="~/images/NoData.PNG" width="300px" height="270px" alt="No data here image"/>
+                        <img src="~/images/NoData.PNG" width="300px" height="270px" alt="No data here image" />
                         <h3>Nothing to show yet!</h3>
 
-                        <div class="button bottom-btn"> 
+                        <div class="button bottom-btn">
                             <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a>
                         </div>
                     }
@@ -102,10 +140,13 @@
 </script>
 
 <script>
+    // get number of table row on page load.
+    var total_rows = $("#table-rows tr td input[type=checkBox]").length;
+
     // update 'SelectAll' checkbox in table header according to rows
     function UpdateSelectAllCheckBox() {
 
-        if ($("#table-rows tr td input[type=checkBox]:checked").length == $("#table-rows tr td input[type=checkBox]").length ){
+        if ($("#table-rows tr td input[type=checkBox]:checked").length == $("#table-rows tr td input[type=checkBox]").length) {
             $("#SelectAll").attr("checked", "checked");
         }
         else {
@@ -113,6 +154,7 @@
         }
     }
 
+    // Delete contact using individual delete button.
     function DeleteContact(contact_id) {
         if (confirm("Are you sure?")) {
             $.ajax({
@@ -122,6 +164,15 @@
                 data: { "c_id": contact_id, "u_id": @ViewBag.id },
                 success: function (data, status) {
                     $("#del_" + contact_id).hide();
+                    total_rows--;
+
+                    // when user delete all contacts of a perticular page, Move to previous page.
+                    if (total_rows == 0 && @pager.currentPage > 1) {
+                        window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage - 1 })';
+                    }
+                    else if (total_rows == 0) {
+                        showNoDataScreen();
+                    }
                 },
                 error: function (xhr, ajaxoption, thrownerror) {
                     alert(thrownerror);
@@ -130,6 +181,7 @@
         }
     }
 
+    // delete all selected contacts.
     function DeleteSelected() {
         var checked = $("#table-rows tr td input[type=checkBox]:checked");
         if (checked.length > 0) {
@@ -154,20 +206,11 @@
                             $("#del_" + id).hide();
                         })
 
-                        if ($("#SelectAll").prop("checked")) {
-                            $("#pagetitle").hide();
-                            $("#table-header").hide();
-                            $("#deletebtn").hide();
-                            $("#addnewlink").hide();
-
-                            $(".content").html(
-                                '<img id="nodataimg" width="300px" height="270px" alt="No data here image"/>   \
-                                 <h3>Nothing to show yet!</h3>  \
-                                 <div class="button bottom-btn">  \
-                                 <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
-                                 </div>'
-                            );
-                            $("#nodataimg").attr("src", "~/images/NoData.PNG");
+                        if ($("#SelectAll").prop("checked") && @pager.currentPage > 1) {
+                            window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage - 1 })';
+                        }
+                        else if ($("#SelectAll").prop("checked")) {
+                            showNoDataScreen();
                         }
 
                     },
@@ -178,5 +221,26 @@
                 });
             }
         }
+        else {
+            alert("Nothing selected!");
+        }
     }
+
+    function showNoDataScreen(){
+        $("#pagetitle").hide();
+        $("#table-header").hide();
+        $("#deletebtn").hide();
+        $("#addnewlink").hide();
+        $(".page-navigator").hide();
+
+        $(".table-container").html(
+            '<img id="nodataimg" width="300px" height="270px" alt="No data here image"/>   \
+            <h3>Nothing to show yet!</h3>  \
+            <div class="button bottom-btn">  \
+            <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
+            </div>'
+        );
+
+    }
+
 </script>

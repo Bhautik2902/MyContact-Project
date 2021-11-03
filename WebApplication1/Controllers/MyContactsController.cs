@@ -19,11 +19,20 @@ namespace WebApplication1.Controllers
             _queryHelper = queryHelper;
         }
         // GET: MyContactsController
-        public async Task<ViewResult> MyContacts(int id)
+        public async Task<ViewResult> MyContacts(int id, int pageNumber=1)
         {
             ViewBag.id = id;
-            var allContacts = await _queryHelper.getAllContacts(id); 
-            return View("Views/MyContacts.cshtml", allContacts);
+            var allContacts = await _queryHelper.getAllContacts(id);
+            const int pageSize = 7;
+            int totalRecords = allContacts.Count();
+
+            var pager = new Pager(totalRecords, pageNumber, pageSize);
+
+            int skipped = (pageNumber - 1) * pageSize;
+            var currentPageRecords = allContacts.Skip(skipped).Take(pager.pageSize).ToList();
+
+            this.ViewBag.PagerInfo = pager;         // send pager details to the view.
+            return View("Views/MyContacts.cshtml", currentPageRecords);
         }
 
         [HttpPost]

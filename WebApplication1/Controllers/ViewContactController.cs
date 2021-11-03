@@ -19,7 +19,8 @@ namespace WebApplication1.Controllers
         public ActionResult ViewContact(int contactid, int userid)
         {
             var contact = _queryHelper.getContact(contactid);
-            ViewBag.id = userid;
+            ViewBag.user_id = userid;
+            ViewBag.contact_id = contactid;
             return View("Views/ViewContact.cshtml", contact);
         }
 
@@ -58,38 +59,10 @@ namespace WebApplication1.Controllers
 
         // POST: ViewContactController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<string> updateContact(int userid, string fname, string lname, string email, string gender, string phone, string fax)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ViewContactController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ViewContactController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            string status = await _queryHelper.updateContactDetails(userid, fname, lname, email, gender, phone, fax);
+            return status;
         }
     }
 }
