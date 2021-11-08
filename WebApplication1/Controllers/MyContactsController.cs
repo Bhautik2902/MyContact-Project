@@ -19,8 +19,9 @@ namespace WebApplication1.Controllers
             _queryHelper = queryHelper;
         }
         // GET: MyContactsController
-        public async Task<ViewResult> MyContacts(int id, int pageNumber=1)
+        public async Task<ViewResult> MyContacts(int pageNumber=1)
         {
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             ViewBag.id = id;
             var allContacts = await _queryHelper.getAllContacts(id);
             const int pageSize = 7;

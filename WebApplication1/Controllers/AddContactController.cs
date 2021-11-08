@@ -17,8 +17,9 @@ namespace WebApplication1.Controllers
             _queryHelper = queryHelper;
         }
         // GET: AddContact
-        public ActionResult AddContact(int id)
+        public ActionResult AddContact()
         {
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             ViewBag.id = id;
             return View("Views/AddContact.cshtml");
         }
@@ -26,8 +27,9 @@ namespace WebApplication1.Controllers
     
         // POST: AddContact/Create
         [HttpPost]
-        public async Task<ActionResult> CreateContact(ContactModel contact, int Id)
+        public async Task<ActionResult> CreateContact(ContactModel contact)
         {
+            int Id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             ViewBag.id = Id;
             if (ModelState.IsValid)
             {

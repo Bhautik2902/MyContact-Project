@@ -35,7 +35,7 @@ namespace WebApplication1
             services.AddDistributedMemoryCache();
             services.AddSession(p =>
             {
-                p.IdleTimeout = TimeSpan.FromMinutes(15);
+                p.IdleTimeout = TimeSpan.FromMinutes(30);
             });
 #endif
         }

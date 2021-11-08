@@ -12,10 +12,10 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.id"><img src="~/images/logo.PNG"></a>   
+                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG"></a>   
                     </div>
                     <div class="button">
-                        <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
+                        <a asp-action="Login" asp-controller="Home"><button class="button-primary" onclick="return confirm('Are you sure?')">Log out</button></a>
                     </div>
                 </div>
             </div>

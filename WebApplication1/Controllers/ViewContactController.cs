@@ -16,10 +16,11 @@ namespace WebApplication1.Controllers
             _queryHelper = queryHelper;
         }
         // GET: ViewContactController
-        public ActionResult ViewContact(int contactid, int userid)
+        public ActionResult ViewContact(int contactid)
         {
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             var contact = _queryHelper.getContact(contactid);
-            ViewBag.user_id = userid;
+            ViewBag.user_id = id;
             ViewBag.contact_id = contactid;
             return View("Views/ViewContact.cshtml", contact);
         }

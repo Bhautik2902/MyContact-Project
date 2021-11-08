@@ -18,8 +18,16 @@ namespace WebApplication1.Controllers
             _queryHelper = queryHelper;
         }
 
-        public ActionResult Login()
+        public async Task<ActionResult> Login()
         {
+            // while session is active get user credentials form session storage.
+            string email = HttpContext.Session.GetString("Email");
+            string password = HttpContext.Session.GetString("Password");
+
+            if (email != null && password != null)
+            {
+                return await Details(email, password);   
+            }
             return View("Views/Login.cshtml");
         }
 
@@ -36,10 +44,12 @@ namespace WebApplication1.Controllers
                 var userid = _queryHelper.getUserId(email, hashedpass);
                 if (userid > 0)
                 {
+                    // store credentials in to session storage.
                     HttpContext.Session.SetString("Email", email);
-                    HttpContext.Session.SetString("Password", hashedpass);
+                    HttpContext.Session.SetString("Password", password);
+                    HttpContext.Session.SetString("UserId", userid+"");
 
-                    return RedirectToAction("Homepage", "Home", new { id = userid });
+                    return RedirectToAction("Homepage", "Home"); 
                 }
                 else
                 {

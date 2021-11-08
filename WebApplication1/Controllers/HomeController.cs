@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,18 +21,23 @@ namespace WebApplication1.Controllers
         {
             _logger = logger;
             _queryHelper = queryHelper;
-
         }
 
         public IActionResult Index()
         {
-            HttpContext.Session.Clear();
             return View();
         }
 
-        
-        public ViewResult Homepage(int id)
+        // on logout.
+        public ActionResult Login()
         {
+            HttpContext.Session.Clear();
+            return View("Views/Home/Index.cshtml");
+        }
+
+        public ViewResult Homepage()
+        {
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             var user = _queryHelper.getUser(id);
             if (user != null)
             {
@@ -42,8 +48,7 @@ namespace WebApplication1.Controllers
             {
                 ViewBag.isSuccess = false;
                 return View("Views/Homepage.cshtml", user);
-            }
-            
+            }          
         }
         public IActionResult Privacy()
         {

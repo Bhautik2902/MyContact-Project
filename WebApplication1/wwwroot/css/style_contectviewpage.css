@@ -154,8 +154,14 @@ div {
     color: var(--dark);
 }
 
+.details .content-wrap .items p {
+    text-align: center;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
 .bottom-btn {
-    margin: 1rem 0 2rem 0; 
+    margin: 1rem 0 2rem 0;
 }
 
 @media (max-width: 486px) {

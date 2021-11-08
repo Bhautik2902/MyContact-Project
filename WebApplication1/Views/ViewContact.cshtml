@@ -12,10 +12,10 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.user_id"><img src="~/images/logo.PNG" alt="Logo image"></a>
-</div>
+                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG" alt="Logo image"></a>
+                    </div>
                     <div class="button">
-                        <a asp-action="Homepage" asp-controller="Home"><button class="button-primary">Log out</button></a>
+                        <a asp-action="Login" asp-controller="Home"><button class="button-primary" onclick="return confirm('Are you sure?')"/>Log out</button></a>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                         <div class="items" id="email-section">
                             <img src="~/images/email.png" title="Contact's Email Address" alt="Email logo">
                             <span id="email" title="Contact's Email Address" contenteditable="true">@Model.Email</span>
-                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
-                            <p class="emailcopy"></p>
+                            <button onclick="copyToClipboard('email')" title="Copy to clipboard"> </button>
+                            <p id="emailcopy"></p>
                         </div>
 
                         <div class="items" title="Contact's Gender" id="gender-section">
@@ -50,15 +50,15 @@
                         <div class="items" id="phone-section">
                             <img src="~/images/phone.png" title="Contact's Phone Number" alt="Phone logo">
                             <span id="phone" title="Contact's Phone Number" contenteditable="true">@Model.phone</span>
-                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
-                            <p class="phonecopy"></p>
+                            <button onclick="copyToClipboard('phone')" title="Copy to clipboard"> </button>
+                            <p id="phonecopy"></p>
                         </div>
 
                         <div class="items" id="fax-section">
                             <img src="~/images/fax.png" title="Contact's fax" alt="Fax-machine logo">
                             <span id="fax" title="Contact's fax" contenteditable="true">@Model.fax</span>
-                            <button onclick="copyClipboard()" title="Copy to clipboard"> </button>
-                            <p class="faxcopy"></p>
+                            <button onclick="copyToClipboard('fax')" title="Copy to clipboard"> </button>
+                            <p id="faxcopy"></p>
                         </div>
                     </div>
                 </div>
@@ -72,20 +72,30 @@
 </body>
 
 <script>
-    function copyClipboard() {
+    function copyToClipboard(action) {
         /* Get the text field */
-        var copyText = document.getElementById("myInput");
-
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-        /* Copy the text inside the text field */
-        navigator.clipboard.writeText(copyText.value);
-
-        /* Alert the copied text */
-        alert("Copied the text: " + copyText.value);
-    }
+        if (action == "email") {
+            let email = document.getElementById('email').innerText;
+            navigator.clipboard.writeText(email);
+            document.getElementById('emailcopy').innerText = "Copied!";
+            document.getElementById('phonecopy').innerText = "";
+            document.getElementById('faxcopy').innerText = "";
+        }
+        else if (action == "phone") {
+            let phone = document.getElementById('phone').innerText;
+            navigator.clipboard.writeText(phone);
+            document.getElementById('emailcopy').innerText = "";
+            document.getElementById('phonecopy').innerText = "Copied!";
+            document.getElementById('faxcopy').innerText = "";
+        }
+        else {
+            let fax = document.getElementById('fax').innerText;
+            navigator.clipboard.writeText(fax);
+            document.getElementById('emailcopy').innerText = "";
+            document.getElementById('phonecopy').innerText = "";
+            document.getElementById('faxcopy').innerText = "Copied!";
+        }
+     }
 
     function updateContact() {
 

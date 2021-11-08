@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebApplication1.Models.ContactModel>
+﻿
+@model IEnumerable<WebApplication1.Models.ContactModel>
 @{
     ViewData["Title"] = "My Contacts";
 
@@ -21,10 +22,10 @@
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home" asp-route-id="@ViewBag.id"><img src="~/images/logo.PNG" alt="Logo image"></a>
+                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG" alt="Logo image"></a>
                     </div>
                     <div class="button">
-                        <a asp-action="Index" asp-controller="Home"><button class="button-primary">Log out</button></a>
+                        <a asp-action="Login" asp-controller="Home"><button class="button-primary" onclick="return confirm('Are you sure?')">Log out</button></a>
                     </div>
                 </div>
             </div>
@@ -67,7 +68,7 @@
                                             <td>@contact.lastname</td>
                                             <td>@contact.gender</td>
                                             <td>@contact.Email</td>
-                                            <td><a asp-action="ViewContact" asp-controller="ViewContact" asp-route-contactid="@contact.id" asp-route-userid="@ViewBag.id"><button class="button-primary btn">Edit</button></a></td>
+                                            <td><a asp-action="ViewContact" asp-controller="ViewContact" asp-route-contactid="@contact.id"><button class="button-primary btn">Edit</button></a></td>
                                             <td><button class="button-primary btn deletebtn" onclick="DeleteContact(@contact.id)">Delete</button></td>
                                         </tr>
                                     }
@@ -80,7 +81,7 @@
                         <div class="button bottom-btn">
                             <input type="submit" class="button-primary" id="deletebtn" onclick="DeleteSelected()" form="selectedItem" value="Delete" />
 
-                            <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id" id="addnewlink"><button class="button-primary">Add New</button></a>
+                            <a asp-action="AddContact" asp-controller="AddContact" id="addnewlink"><button class="button-primary">Add New</button></a>
                         </div>
 
                         <div class="page-navigator">
@@ -117,7 +118,7 @@
                         <h3>Nothing to show yet!</h3>
 
                         <div class="button bottom-btn">
-                            <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a>
+                            <a asp-action="AddContact" asp-controller="AddContact"><button class="button-primary">Add New</button></a>
                         </div>
                     }
                 </div>
@@ -128,31 +129,32 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
+    // select and deselect checkbox accordingly
+    $(function () {
+        // check all rows on 'selectall' clicked.
+        $("#SelectAll").click(function () {
+            $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+        });
 
-    // select and deselect all checkboxes.
-    $(".selectAll").change(function () {
-        $(".selectContact").prop("checked", $(this).prop("checked"))
-    })
+        // uncheck 'selectall' when any one row is not selected.
+        $("input[type=checkbox]").click(function () {
+            if (!$(this).prop("checked")) {
+                $("#SelectAll").prop("checked", false);
+            }
+        });
 
-    $("#table-rows tr td input[type=checkBox]").click(function () {
-        UpdateSelectAllCheckBox();
-    })
+        // check 'selectall' when all rows are selected.
+        $("input[type=checkbox]").click(function () {
+            if ($("#table-rows tr td input[type=checkBox]:checked").length == $("#table-rows tr td input[type=checkBox]").length) {
+                $("#SelectAll").prop("checked", true);
+            }
+        });
+    })   
 </script>
 
 <script>
     // get number of table row on page load.
     var total_rows = $("#table-rows tr td input[type=checkBox]").length;
-
-    // update 'SelectAll' checkbox in table header according to rows
-    function UpdateSelectAllCheckBox() {
-
-        if ($("#table-rows tr td input[type=checkBox]:checked").length == $("#table-rows tr td input[type=checkBox]").length) {
-            $("#SelectAll").attr("checked", "checked");
-        }
-        else {
-            $("#SelectAll").removeAttr("checked");
-        }
-    }
 
     // Delete contact using individual delete button.
     function DeleteContact(contact_id) {
@@ -213,6 +215,8 @@
                             showNoDataScreen();
                         }
 
+                        // subtract no. of deleted rows from total rows.
+                        total_rows -= checked.length;
                     },
                     error: function (xhr, ajaxoption, thrownerror) {
                         alert(thrownerror);
@@ -240,6 +244,9 @@
             <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
             </div>'
         );
+    }
+
+    function handleSelectDeselect() {
 
     }
 
