@@ -172,6 +172,9 @@
                     if (total_rows == 0 && @pager.currentPage > 1) {
                         window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage - 1 })';
                     }
+                    else if (total_rows == 0 && @pager.currentPage == 1) {
+                        window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage + 1 })';
+                    }
                     else if (total_rows == 0) {
                         showNoDataScreen();
                     }
@@ -211,6 +214,9 @@
                         if ($("#SelectAll").prop("checked") && @pager.currentPage > 1) {
                             window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage - 1 })';
                         }
+                        else if ($("#SelectAll").prop("checked") && @pager.currentPage == 1) {
+                            window.location.href = '@Url.Action("MyContacts", "MyContacts", new { id = ViewBag.id, pageNumber = pager.currentPage + 1 })';
+                        }
                         else if ($("#SelectAll").prop("checked")) {
                             showNoDataScreen();
                         }
@@ -244,10 +250,6 @@
             <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
             </div>'
         );
-    }
-
-    function handleSelectDeselect() {
-
     }
 
 </script>
