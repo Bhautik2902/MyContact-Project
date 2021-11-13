@@ -33,8 +33,8 @@ namespace WebApplication1.Controllers
                 if (id > 0)
                 {
                     ViewBag.isSuccess = 1;
-                    ViewBag.message = "Signup successful!";
-                    return View("Views/Signup.cshtml");
+                    ViewBag.message = "Success";
+                    return View("Views/Login.cshtml");
                 }
                 else if (id == 0)
                 {

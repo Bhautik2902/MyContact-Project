@@ -6,13 +6,22 @@
 <head>
     <link href="~/css/style_addcontactpage.css" rel="stylesheet" />
 </head>
-<body>
+<body> 
+    @if (ViewBag.message != null && ViewBag.message == "Success")
+    {
+        <div class="alert alert-success fade show" role="alert" id="alertbox">
+            Contact added successfully! See <a asp-action="MyContacts" asp-controller="MyContacts" class="alert-link">here</a>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
     <div class="wrapper">
         <div class="container">
             <div class="header">
                 <div class="flex-wrap">
                     <div class="logo">
-                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG"></a>   
+                        <a asp-action="Homepage" asp-controller="Home"><img src="~/images/logo.PNG"></a>
                     </div>
                     <div class="button">
                         <a asp-action="Login" asp-controller="Home"><button class="button-primary" onclick="return confirm('Are you sure?')">Log out</button></a>
@@ -62,7 +71,7 @@
                                     <div class="status">
                                         @if (ViewBag.isSuccess == 1)
                                         {
-                                            <p>@ViewBag.message</p> <!-- if succeed default CSS property of status class will be applied -->
+                                            <p></p> <!-- if succeed default CSS property of status class will be applied -->
                                         }
                                         else
                                         {
@@ -82,9 +91,7 @@
             </div>
         </div>
     </div>
-    
-    
-   
+
 </body>
 
 

@@ -14,6 +14,7 @@ namespace WebApplication1.Controllers
     public class MyContactsController : Controller
     {
         private readonly QueryHelper _queryHelper = null;
+ 
         public MyContactsController(QueryHelper queryHelper)
         {
             _queryHelper = queryHelper;
@@ -21,12 +22,16 @@ namespace WebApplication1.Controllers
         // GET: MyContactsController
         public async Task<ViewResult> MyContacts(int pageNumber=1)
         {
+            HttpContext.Session.SetString("lastquery", "");
+
             int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
             ViewBag.id = id;
             var allContacts = await _queryHelper.getAllContacts(id);
+           
             const int pageSize = 7;
+           
             int totalRecords = allContacts.Count();
-
+            
             var pager = new Pager(totalRecords, pageNumber, pageSize);
 
             int skipped = (pageNumber - 1) * pageSize;
@@ -34,6 +39,45 @@ namespace WebApplication1.Controllers
 
             this.ViewBag.PagerInfo = pager;         // send pager details to the view.
             return View("Views/MyContacts.cshtml", currentPageRecords);
+        }
+
+        public async Task<ViewResult> SearchContact(string query, int pageNumber = 1)
+        {   
+            if (!string.IsNullOrEmpty(query))
+            {
+                HttpContext.Session.SetString("lastquery", query);
+            }
+          
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
+            ViewBag.id = id;
+            var MatchedContacts = await _queryHelper.searchContacts(query, id);
+            
+            const int pageSize = 7;
+            int totalRecords = MatchedContacts.Count();
+
+            var pager = new Pager(totalRecords, pageNumber, pageSize);
+
+            int skipped = (pageNumber - 1) * pageSize;
+            var currentPageRecords = MatchedContacts.Skip(skipped).Take(pager.pageSize).ToList();
+
+            this.ViewBag.PagerInfo = pager;         // send pager details to the view.
+            return View("Views/MyContacts.cshtml", currentPageRecords);
+        }
+
+        public async Task<ViewResult> PagelinkResponse(int pageNumber = 1)
+        {
+            int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
+            ViewBag.id = id;
+
+            string lastquery = HttpContext.Session.GetString("lastquery");
+            if ( lastquery == "")
+            {
+                return await MyContacts(pageNumber);
+            }
+            else
+            {
+                return await SearchContact(lastquery, pageNumber);
+            }
         }
 
         [HttpPost]
@@ -49,7 +93,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public async Task<int> DeleteThisOne(int c_id, int u_id)
+        public async Task<int> DeleteThisOne(int c_id)
         {
             string status = await _queryHelper.deleteIndividual(c_id);
             if (status == "Success")
@@ -66,48 +110,6 @@ namespace WebApplication1.Controllers
                 TempData["error_msg"] = status;
                 return -1;  // error occured
             }
-        }
-
-        // GET: MyContactsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MyContactsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MyContactsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MyContactsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        }  
     }
 }

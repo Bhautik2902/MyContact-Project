@@ -15,6 +15,9 @@ form {
     display: inline-block;
 }
 
+.alert {
+   margin-bottom: 0rem;
+}
 .overlay-section {
     width: 100%;
     height: 100vh;

@@ -28,7 +28,7 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<CoreDbContext>(options => options.UseNpgsql("Server=127.0.0.1;Port=5432;Database=MyContactsDB;User Id=postgres;Password=bha@2902"));
+            services.AddDbContext<CoreDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MyContactDBConnection")));
             services.AddScoped<QueryHelper, QueryHelper>();
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();

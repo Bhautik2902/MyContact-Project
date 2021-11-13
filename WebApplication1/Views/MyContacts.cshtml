@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<WebApplication1.Models.ContactModel>
+﻿@model IEnumerable<WebApplication1.Models.ContactModel>
 @{
     ViewData["Title"] = "My Contacts";
 
@@ -40,6 +39,11 @@
                         </div>
 
                         <div class="table-container">
+                            <div class="search-area">
+                                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+                                <input class="searchfield" type="text" placeholder="Search using name">
+                                @*------*@                 <a id="searchlink" asp-action="SearchContact" asp-controller="MyContacts" onclick="MakeSearch()"><button class="button-secondary">Search</button></a>
+                            </div>
                             <table class="content-table">
                                 <thead id="table-header">
                                     <tr>
@@ -85,32 +89,32 @@
                         </div>
 
                         <div class="page-navigator">
+                            @*distinguish search reasult with all result using sessions*@
                             @if (pager.totalPage > 0)
                             {
                                 <ul class="pagination justify-content-end">
                                     @if (pager.currentPage > 1)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@(pager.currentPage-1)">Previous</a>
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="PagelinkResponse" asp-route-pageNumber="@(pager.currentPage-1)">Previous</a>
                                         </li>
                                     }
                                     @for (var pge = pager.firstPage; pge <= pager.lastPage; pge++)
                                     {
                                         <li class="page-item @(pge == pager.currentPage ? "active" : "")">
-                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@pge">@pge</a>
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="PagelinkResponse" asp-route-pageNumber="@pge">@pge</a>
                                         </li>
                                     }
                                     @if (pager.currentPage < pager.totalPage)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="MyContacts" asp-action="MyContacts" asp-route-pageNumber="@(pager.currentPage+1)">Next</a>
+                                            <a class="page-link" asp-controller="MyContacts" asp-action="PagelinkResponse" asp-route-pageNumber="@(pager.currentPage+1)">Next</a>
                                         </li>
                                     }
                                 </ul>
                             }
 
                         </div>
-
                     }
                     else
                     {
@@ -149,7 +153,18 @@
                 $("#SelectAll").prop("checked", true);
             }
         });
-    })   
+    })
+
+    @*$("#searchlink").click(function () {
+        let query_str = $(".searchfield").val();
+        alert(query_str);
+        if (query_str.length == 0) {
+            alert("please enter search query!");
+        }
+        else {
+            window.location.href = $(this).attr('href') + '/' + query_str;
+        }
+    }*@
 </script>
 
 <script>
@@ -244,7 +259,7 @@
         $(".page-navigator").hide();
 
         $(".table-container").html(
-            '<img id="nodataimg" width="300px" height="270px" alt="No data here image"/>   \
+            '<img src="~/images/NoData.png" id="nodataimg" width="300px" height="270px" alt="No data here image"/>   \
             <h3>Nothing to show yet!</h3>  \
             <div class="button bottom-btn">  \
             <a asp-action="AddContact" asp-controller="AddContact" asp-route-id="@ViewBag.id"><button class="button-primary">Add New</button></a> \
@@ -252,4 +267,14 @@
         );
     }
 
+    // make serach; read search field and send it to controllar's action method.
+    function MakeSearch() {
+        var query_str = $(".searchfield").val();
+
+        var urlstring = $("#searchlink").attr('href') + '?' + 'query=' + query_str;
+        $("#searchlink").attr('href', urlstring);
+
+     }
+
 </script>
+

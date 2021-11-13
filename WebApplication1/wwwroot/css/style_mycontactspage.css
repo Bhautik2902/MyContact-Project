@@ -75,10 +75,24 @@ div {
     align-items: center;
 }
 
+.table-container .search-area {
+    width: 100%;
+    text-align: left;
+    margin-bottom: .5rem;
+}
+
+.table-container .search-area .searchfield {
+    width: 60%;
+    padding: .3rem 0 .3rem .2rem;
+    border-radius: 5px;
+    font-family: sans-serif;
+    border: 1px solid var(--border);
+    margin-right: 2lrem;
+}
 .content .table-container .content-table {
     border-collapse: collapse;
     font-size: 0.9rem;
-    min-width: 400px;   
+    min-width: 400px;
     border-radius: 5px 5px 0 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }

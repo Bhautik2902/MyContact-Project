@@ -38,7 +38,7 @@ namespace WebApplication1.Controllers
                 if (id > 0)
                 {
                     ViewBag.isSuccess = 1;
-                    ViewBag.message = "Contact added successfully!";
+                    ViewBag.message = "Success";
                     return View("Views/AddContact.cshtml");
                 }
                 else 

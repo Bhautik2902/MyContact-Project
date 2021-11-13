@@ -162,7 +162,7 @@ namespace WebApplication1.DBHelper
             try
             {
                 var contacts = new List<ContactModel>();
-                var allContacts = await _context.Contacts.Where(p => p.Userid == id).ToListAsync();
+                var allContacts = await _context.Contacts.OrderBy(p => p.Id).Where(p => p.Userid == id).ToListAsync();
                 if (allContacts?.Any() == true)
                 {
                     foreach (var contact in allContacts)
@@ -262,6 +262,45 @@ namespace WebApplication1.DBHelper
             }
         }
 
+        // search contacts that match the query
+        public async Task<List<ContactModel>> searchContacts(string query, int id)
+        {
+
+            if (query == null)    // if query is empty, reset page with all contacts.
+            {
+                return await getAllContacts(id);
+            }
+            else
+            {
+                try
+                {
+                    var contacts = new List<ContactModel>();
+                    //var allMatchedContacts = await _context.Contacts.OrderBy(p => p.Id).Where(p => (p.Id == id && (p.FirstName.Contains(query) || p.LastName.Contains(query)))).ToListAsync();
+                    var allMatchedContacts = await _context.Contacts.OrderBy(p => p.Id).Where(p => p.Userid == id && (p.FirstName.Contains(query) || p.LastName.Contains(query))).ToListAsync();
+                    if (allMatchedContacts?.Any() == true)
+                    {
+                        foreach (var contact in allMatchedContacts)
+                        {
+                            contacts.Add(new ContactModel
+                            {
+                                id = contact.Id,
+                                userid = contact.Userid,
+                                firstname = contact.FirstName,
+                                lastname = contact.LastName,
+                                Email = contact.Email,
+                                gender = contact.Gender,
+                            });
+                        }
+                    }
+                    return contacts;
+                }
+                catch (Exception e)
+                {
+                    Debug.Write(e.Message);
+                    return null;
+                }
+            }
+        }
  //============================================================ utility methods.=============================================================
         public bool isUserExist(string targetemail)
         {
