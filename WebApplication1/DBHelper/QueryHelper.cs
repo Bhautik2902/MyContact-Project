@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -266,7 +267,7 @@ namespace WebApplication1.DBHelper
         public async Task<List<ContactModel>> searchContacts(string query, int id)
         {
 
-            if (query == null)    // if query is empty, reset page with all contacts.
+            if (string.IsNullOrEmpty(query))    // if query is empty, reset page with all contacts.
             {
                 return await getAllContacts(id);
             }
@@ -275,7 +276,6 @@ namespace WebApplication1.DBHelper
                 try
                 {
                     var contacts = new List<ContactModel>();
-                    //var allMatchedContacts = await _context.Contacts.OrderBy(p => p.Id).Where(p => (p.Id == id && (p.FirstName.Contains(query) || p.LastName.Contains(query)))).ToListAsync();
                     var allMatchedContacts = await _context.Contacts.OrderBy(p => p.Id).Where(p => p.Userid == id && (p.FirstName.Contains(query) || p.LastName.Contains(query))).ToListAsync();
                     if (allMatchedContacts?.Any() == true)
                     {

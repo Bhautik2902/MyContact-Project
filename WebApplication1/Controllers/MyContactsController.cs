@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.DBHelper;
-using WebApplication1.EntityModels;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -22,6 +19,7 @@ namespace WebApplication1.Controllers
         // GET: MyContactsController
         public async Task<ViewResult> MyContacts(int pageNumber=1)
         {
+            // store the last search query made by user. Decide on page click, whether all contacts is shown up or just those which contains query string.
             HttpContext.Session.SetString("lastquery", "");
 
             int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
@@ -43,9 +41,13 @@ namespace WebApplication1.Controllers
 
         public async Task<ViewResult> SearchContact(string query, int pageNumber = 1)
         {   
-            if (!string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))     // if query is not empty or null store it into lastquery.
             {
                 HttpContext.Session.SetString("lastquery", query);
+            }
+            else      
+            {
+                HttpContext.Session.SetString("lastquery", "");
             }
           
             int id = Convert.ToInt32((HttpContext.Session.GetString("UserId")));
